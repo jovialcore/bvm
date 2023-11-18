@@ -18,7 +18,6 @@ Route::post('/login', [App\Http\Controllers\Api\AuthenticationController::class,
 Route::post('/register', [App\Http\Controllers\Api\AuthenticationController::class, 'register'])->name('register');
 
 Route::middleware(['auth:sanctum', 'role'])->group(function () {
-    Route::get('/dashbord', function () {
-        return response()->json(['message' => 'This is the dashborad for all things']);
-    });
+    Route::post('/transaction/create', [App\Http\Controllers\Api\Admin\TransactionController::class, 'createTransaction']);
+    Route::put('/transaction/update/{id}', [App\Http\Controllers\Api\Admin\TransactionController::class, 'updateTransaction']);
 });

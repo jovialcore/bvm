@@ -55,4 +55,11 @@ class TransactionService
 
         return $transaction->save();
     }
+
+
+    public function updateTransaction( $id)
+    {
+        
+        
+    }
 }

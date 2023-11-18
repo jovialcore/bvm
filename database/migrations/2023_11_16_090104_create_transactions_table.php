@@ -18,10 +18,11 @@ return new class extends Migration
             $table->datetime('due_on');
             $table->decimal('vat', 5, 2)->default(0);
             $table->boolean('is_vat_inclusive')->default(true);
-            $table->enum('transaction_type', ['full_payment', 'part_payment'])->default('no_payment');
+            $table->enum('transaction_type', ['full_payment', 'part_payment', 'no_payment'])->default('no_payment');
             $table->string('status')->nullable();
             $table->text('transaction_ref');
-            $table->string('status')->nullable();
+
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

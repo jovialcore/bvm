@@ -17,8 +17,21 @@ class TransactionController extends Controller
     ) {
     }
 
-
     public function createTransaction(TransactionFormRequest  $request)
+    {
+        if ($this->transactionService->createTransaction($request)) {
+            return response()->json($this->success([], 'Transaction Created successfully'));
+        } else {
+            return response()->json([
+                'response' =>  false,
+                'status' => 500,
+                'message' => 'Transaction Could not be created.',
+            ]);
+        }
+    }
+
+
+    public function updateTransaction(TransactionFormRequest  $request)
     {
         if ($this->transactionService->createTransaction($request)) {
             return response()->json($this->success([], 'Transaction Created successfully'));
