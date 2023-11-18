@@ -22,15 +22,15 @@ class TransactionFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required',
+            'amount' => 'required|numeric|between:-9999999999.99,9999999999.99',
             'payer' => 'required|string',
-            'due_on' => 'date',
+            'due_on' => 'required|date',
             'vat' => 'required|integer',
             'is_vat_inclusive' => 'required',
             'description' => 'string',
-            
 
-            
+
+
         ];
     }
 }

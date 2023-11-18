@@ -12,16 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->decimal('amount', 10, 2)->nullable();
             $table->string('payer');
-            $table->datetime('due_on');
+            $table->datetime('due_on')->nullable();
+            $table->datetime('paid_on')->nullable();
             $table->decimal('vat', 5, 2)->default(0);
             $table->boolean('is_vat_inclusive')->default(true);
             $table->enum('transaction_type', ['full_payment', 'part_payment', 'no_payment'])->default('no_payment');
             $table->string('status')->nullable();
             $table->text('transaction_ref');
-
+            $table->foreignUuid('user_id');
             $table->text('description')->nullable();
             $table->timestamps();
         });

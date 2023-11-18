@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Transaction extends Model
 {
     use HasFactory, HasUuids;
+
+
+    public function user()
+    {
+        $this->belongsTo(User::class);
+    }
 }
