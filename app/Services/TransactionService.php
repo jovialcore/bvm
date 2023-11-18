@@ -10,11 +10,6 @@ use Carbon\Carbon;
 class TransactionService
 {
 
-    public function __construct(
-        private TransactionController $transactionController
-    ) {
-    }
-
 
     public function createTransaction(TransactionFormRequest $request): bool
     {
