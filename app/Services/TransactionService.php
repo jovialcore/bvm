@@ -38,11 +38,12 @@ class TransactionService
     public function updateTransaction($id, $request): bool
     {
 
-        $transaction = Transaction::findorFail($id);
+
+        $transaction = Transaction::findOrFail($id);
+      
 
         $transaction->amount = $request->amount;
         $transaction->paid_on = $request->paid_on;
-
         $transaction = $this->determineStatus($transaction, $request, $request->paid_on);
         $transaction->paid_on = $request->paid_on;
         $transaction->transaction_type = $request->transaction_type;

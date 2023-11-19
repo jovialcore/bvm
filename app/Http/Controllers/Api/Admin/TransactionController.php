@@ -20,7 +20,6 @@ class TransactionController extends Controller
 
     public function createTransaction(TransactionFormRequest  $request)
     {
-    
         if ($this->transactionService->createTransaction($request)) {
             return response()->json($this->success([], 'Transaction Created successfully'));
         } else {
@@ -36,7 +35,7 @@ class TransactionController extends Controller
     public function updateTransaction($id, TransactionFormRequest  $request)
     {
         if ($this->transactionService->updateTransaction($id, $request)) {
-            return response()->json($this->success([], 'Transaction Created successfully'));
+            return response()->json($this->success([], 'Transaction Updated successfully'));
         } else {
             return response()->json([
                 'response' =>  false,
