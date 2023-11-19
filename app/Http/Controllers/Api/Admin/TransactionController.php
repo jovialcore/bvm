@@ -50,7 +50,7 @@ class TransactionController extends Controller
 
         $data = $this->transactionService->listTransaction();
         if ($data->count() > 0) {
-            return $this->success($data, 'Transaction Created successfully');
+            return $this->success($data, 'Transactions returned successfully');
         } else {
             return response()->json([
                 'response' =>  false,
@@ -62,6 +62,15 @@ class TransactionController extends Controller
 
     public function monthlyReport(Request $request)
     {
-        return response()->json($this->transactionService->monthlyReport($request));
+        $data = $this->transactionService->monthlyReport($request);
+        if ($data->count() > 0) {
+            return response()->json($this->success($data, 'Report generated successfully'));
+        } else {
+            return response()->json([
+                'response' =>  false,
+                'status' => 404,
+                'message' => 'No transaction found.',
+            ]);
+        }
     }
 }

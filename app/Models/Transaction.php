@@ -11,8 +11,8 @@ class Transaction extends Model
     use HasFactory, HasUuids;
 
 
-    public function user()
+    public function users()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
