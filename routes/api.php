@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [App\Http\Controllers\Api\AuthenticationController::class, 'login'])->name('login');
 Route::post('/register', [App\Http\Controllers\Api\AuthenticationController::class, 'register'])->name('register');
 
-// for only admins
+// only for admins
 Route::middleware(['auth:sanctum', 'role'])->group(function () {
     Route::post('/transaction/create', [App\Http\Controllers\Api\Admin\TransactionController::class, 'createTransaction']);
     Route::put('/transaction/update/{id}', [App\Http\Controllers\Api\Admin\TransactionController::class, 'updateTransaction']);
@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum', 'role'])->group(function () {
 });
 
 
-// route for only users
+// route for users and admin to use
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/transaction/list', [App\Http\Controllers\Api\Admin\TransactionController::class, 'listTransaction']);
 });

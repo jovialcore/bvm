@@ -62,6 +62,8 @@ class TransactionController extends Controller
 
     public function monthlyReport(Request $request)
     {
+
+        
         $data = $this->transactionService->monthlyReport($request);
         if ($data->count() > 0) {
             return response()->json($this->success($data, 'Report generated successfully'));

@@ -40,7 +40,7 @@ class TransactionService
 
 
         $transaction = Transaction::findOrFail($id);
-      
+
 
         $transaction->amount = $request->amount;
         $transaction->paid_on = $request->paid_on;
@@ -100,7 +100,6 @@ class TransactionService
 
     public function monthlyReport($request)
     {
-
         $request->validate(
             [
                 'start_date' => 'required|date',
@@ -115,7 +114,7 @@ class TransactionService
             YEAR(created_at) as year,
             MONTH(created_at) as month,
             SUM(CASE WHEN status = "paid" THEN amount ELSE 0 END) as paid_amount,
-            SUM(CASE WHEN status = "outstanding" AND due_date >= NOW() THEN amount ELSE 0 END)  as outstanding_amount,
+            SUM(CASE WHEN status = "outstanding" AND due_on >= NOW() THEN amount ELSE 0 END)  as outstanding_amount,
             SUM(CASE WHEN status = "overdue" THEN amount ELSE 0 END) as overdue_amount
         ')
             ->whereBetween('created_at', [
