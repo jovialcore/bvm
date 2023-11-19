@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TransactionService
 {
@@ -88,5 +89,38 @@ class TransactionService
         } else {
             return new TransactionResourceCollection(Transaction::whereHas('users')->get());
         }
+    }
+
+    public function monthlyReport($request)
+    {
+
+
+        $request->validate(
+            [
+                'start_date' => 'required|date',
+                'end_date' => 'required|date'
+            ]
+        );
+
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+        $generateReport = DB::table('transactions')
+            ->selectRaw('
+            YEAR(created_at) as year,
+            MONTH(created_at) as month,
+            SUM(CASE WHEN status = "paid" THEN amount ELSE 0 END) as paid_amount,
+            SUM(CASE WHEN status = "outstanding" AND due_date >= NOW() THEN amount ELSE 0 END)  as outstanding_amount,
+            SUM(CASE WHEN status = "overdue" THEN amount ELSE 0 END) as overdue_amount
+        ')
+            ->whereBetween('created_at', [
+                DB::raw("STR_TO_DATE('$startDate', '%c/%e/%Y %H:%i:%s')"),
+                DB::raw("STR_TO_DATE('$endDate', '%c/%e/%Y %H:%i:%s')"),
+            ])
+            ->groupBy('year', 'month')
+            ->orderBy('month', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+
+        return  $generateReport;
     }
 }

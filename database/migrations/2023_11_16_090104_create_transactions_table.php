@@ -21,7 +21,6 @@ return new class extends Migration
             $table->boolean('is_vat_inclusive')->default(true);
             $table->enum('transaction_type', ['full_payment', 'part_payment', 'no_payment'])->default('no_payment');
             $table->string('status')->nullable();
-            $table->text('transaction_ref');
             $table->foreignUuid('user_id');
             $table->text('description')->nullable();
             $table->timestamps();

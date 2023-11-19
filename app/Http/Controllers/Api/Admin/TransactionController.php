@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TransactionFormRequest;
 use App\Services\TransactionService;
 use App\Traits\ApiResponse;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -57,5 +58,10 @@ class TransactionController extends Controller
                 'message' => 'No transaction found.',
             ]);
         }
+    }
+
+    public function monthlyReport(Request $request)
+    {
+        return response()->json($this->transactionService->monthlyReport($request));
     }
 }

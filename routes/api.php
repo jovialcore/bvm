@@ -21,6 +21,7 @@ Route::post('/register', [App\Http\Controllers\Api\AuthenticationController::cla
 Route::middleware(['auth:sanctum', 'role'])->group(function () {
     Route::post('/transaction/create', [App\Http\Controllers\Api\Admin\TransactionController::class, 'createTransaction']);
     Route::put('/transaction/update/{id}', [App\Http\Controllers\Api\Admin\TransactionController::class, 'updateTransaction']);
+    Route::get('/transaction/report/generate', [App\Http\Controllers\Api\Admin\TransactionController::class, 'monthlyReport']);
 });
 
 
