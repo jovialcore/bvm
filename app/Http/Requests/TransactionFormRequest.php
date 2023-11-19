@@ -11,7 +11,7 @@ class TransactionFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,6 +28,8 @@ class TransactionFormRequest extends FormRequest
             'vat' => 'required|integer',
             'is_vat_inclusive' => 'required',
             'description' => 'string',
+            'transaction_type' => 'required|string|in:part_payment,full_payment',
+            'user_id' => "required"  // user id is required. since we need to associate any of our users to a transantion
 
 
 

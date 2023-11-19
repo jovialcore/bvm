@@ -19,7 +19,7 @@ return new class extends Migration
             $table->datetime('paid_on')->nullable();
             $table->decimal('vat', 5, 2)->default(0);
             $table->boolean('is_vat_inclusive')->default(true);
-            $table->enum('transaction_type', ['full_payment', 'part_payment', 'no_payment'])->default('no_payment');
+            $table->enum('transaction_type', ['full_payment', 'part_payment', 'no_payment']);
             $table->string('status')->nullable();
             $table->foreignUuid('user_id');
             $table->text('description')->nullable();

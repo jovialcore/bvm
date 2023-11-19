@@ -25,9 +25,12 @@ class TransactionService
         $transaction->payer = $request->payer;
         $transaction->vat =  $request->vat;
         $transaction->is_vat_inclusive = $request->is_vat_inclusive;
+        $transaction->user_id = $request->user_id;
 
         $transaction = $this->determineStatus($transaction, $request, $request->due_on);
         $transaction->due_on = $request->due_on;
+        $transaction->transaction_type = $request->transaction_type;
+        // dd($transaction);
         return $transaction->save();
     }
 
@@ -42,6 +45,8 @@ class TransactionService
 
         $transaction = $this->determineStatus($transaction, $request, $request->paid_on);
         $transaction->paid_on = $request->paid_on;
+        $transaction->transaction_type = $request->transaction_type;
+        // dd($transaction);
         return $transaction->save();
     }
 
@@ -50,10 +55,10 @@ class TransactionService
         $currentDate = Carbon::now();
 
 
-        if ($currentDate->greaterThan($date) && $transaction->transaction_type == 'part_payment') {
+        if ($currentDate->greaterThan($date) && $request->transaction_type == 'part_payment') {
             $transaction->status = 'overdue';
         }
-        if ($currentDate->greaterThan($date) && $transaction->transaction_type == 'full_payment') {
+        if ($currentDate->greaterThan($date) && $request->transaction_type == 'full_payment') {
             $transaction->status = 'paid';
         }
 
@@ -66,7 +71,7 @@ class TransactionService
             $currentDate->lessThan($date)
             &&
             ((
-                empty($request->amount) || $transaction->transaction_type == 'part_payment'
+                empty($request->amount) || $request->transaction_type == 'part_payment'
             ))
         ) {
             $transaction->status = 'outstanding';
@@ -76,6 +81,7 @@ class TransactionService
         if ($currentDate->lessThan($date)) {
             $transaction->status = 'overdue';
         }
+
         return $transaction;
     }
 
@@ -93,7 +99,6 @@ class TransactionService
 
     public function monthlyReport($request)
     {
-
 
         $request->validate(
             [
