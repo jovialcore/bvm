@@ -123,7 +123,6 @@ class TransactionService
             ])
             ->groupBy('year', 'month')
             ->orderBy('month', 'desc')
-            ->orderBy('month', 'desc')
             ->get();
 
         return  $generateReport;
